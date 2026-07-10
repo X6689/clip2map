@@ -4,6 +4,9 @@ Clip2Map 是一个 30 天产品验证项目，定位是：**Turn food spots into
 
 Day 2 版本已经可以公开展示、收集 Map Request 和产品反馈，并通过 Tokyo Ramen Demo 验证地图浏览体验。所有公开页面使用英文，示例地点均明确标注为 Demo 数据。
 
+- 公开站点：[https://x6689.github.io/clip2map/](https://x6689.github.io/clip2map/)
+- GitHub：[https://github.com/X6689/clip2map](https://github.com/X6689/clip2map)
+
 ## 当前功能
 
 - 英文 Landing Page、清晰 CTA 和 Tokyo Ramen Map 预览

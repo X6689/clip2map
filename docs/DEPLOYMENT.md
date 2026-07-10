@@ -1,8 +1,16 @@
 # Clip2Map 部署说明
 
+## 当前公开部署
+
+- GitHub 仓库：[https://github.com/X6689/clip2map](https://github.com/X6689/clip2map)
+- GitHub Pages：[https://x6689.github.io/clip2map/](https://x6689.github.io/clip2map/)
+- 自动部署：`.github/workflows/deploy-pages.yml`
+
+当前生产站点使用 GitHub Pages。Actions 环境中 `next.config.ts` 会启用静态导出和 `/clip2map` base path，本地开发与 `next start` 不受影响。
+
 ## 推荐平台
 
-推荐 GitHub + Vercel Hobby 或等效的 Next.js 托管平台。当前项目使用标准 Next.js App Router，不需要自定义服务器、数据库或付费资源。
+当前使用 GitHub Pages 免费部署。Vercel Hobby 仍可作为可选的等效 Next.js 平台。项目不需要自定义服务器、数据库或付费资源。
 
 ## 推送到 GitHub
 
@@ -25,6 +33,8 @@ git push
 ```
 
 ## Vercel 部署
+
+Vercel 当前未登录，以下步骤需要用户自行完成授权，仅作为可选迁移方案。
 
 无需全局安装 CLI：
 
