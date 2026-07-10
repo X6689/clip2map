@@ -10,7 +10,7 @@
 
 ## 推荐平台
 
-当前使用 GitHub Pages 免费部署。表单持久化推荐 Supabase Free，前端只使用公开 anon key 和 insert-only RLS policy。
+当前使用 GitHub Pages 免费部署。表单以 Supabase Free 为主持久化，前端只使用公开 anon key 和 insert-only RLS policy；Day 3 endpoint 保留为临时备用通道。
 
 ## 推送到 GitHub
 
@@ -66,9 +66,18 @@ npx vercel --prod
 ```text
 NEXT_PUBLIC_FEEDBACK_ENDPOINT=
 NEXT_PUBLIC_FEEDBACK_API_KEY=
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
-在 Supabase SQL Editor 执行 `supabase/schema.sql`，endpoint 使用 `https://PROJECT.supabase.co/rest/v1/clip2map_submissions`，API key 使用 anon key。两项都会进入浏览器，绝不能配置 service-role key。RLS 只授予匿名 insert，不授予 select。留空或请求失败时显示 Copy fallback。
+在 Supabase SQL Editor 执行 `supabase/schema.sql`。`NEXT_PUBLIC_SUPABASE_URL` 使用项目 URL，`NEXT_PUBLIC_SUPABASE_ANON_KEY` 使用 anon key，绝不能配置 service-role key。RLS 只授予匿名 insert，不授予 select、update 或 delete。Supabase 失败时尝试 `NEXT_PUBLIC_FEEDBACK_ENDPOINT`，两条通道都失败才显示 Copy fallback。
+
+GitHub Pages 建议配置：
+
+```powershell
+gh variable set NEXT_PUBLIC_SUPABASE_URL --repo X6689/clip2map --body "https://PROJECT.supabase.co"
+gh secret set NEXT_PUBLIC_SUPABASE_ANON_KEY --repo X6689/clip2map
+```
 
 ## 自定义域名
 
@@ -82,7 +91,7 @@ NEXT_PUBLIC_FEEDBACK_API_KEY=
 
 1. 本地运行 `npm ci`、`npm run lint`、`npm run build`。
 2. 确认 Node.js 使用平台支持的稳定版本，建议 Node 20 或 22。
-3. 检查环境变量名和值，确认使用 anon key 而不是 service-role key。
+3. 检查 Supabase URL 与 anon key 是否成对配置，确认没有使用 service-role key。
 4. 检查 OpenStreetMap 图块网络请求和浏览器控制台 CORS 错误。
 5. Leaflet 使用自定义 `divIcon`，不依赖本地默认 marker 图片路径。
 6. 表单端点失败时应显示 fallback，而不是空白或假成功。

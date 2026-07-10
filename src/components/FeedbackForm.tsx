@@ -59,7 +59,7 @@ export function FeedbackForm() {
         confusing: data.confusing,
         feature: data.feature,
       });
-      setStatus(result.delivery === "endpoint" ? "success" : "fallback");
+      setStatus(result.delivery === "fallback" ? "fallback" : "success");
       trackEvent("feedback_submitted", { delivery: result.delivery });
     } catch {
       setStatus("error");

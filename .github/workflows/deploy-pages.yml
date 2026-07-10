@@ -39,6 +39,8 @@ jobs:
       - name: Build static export
         run: npm run build
         env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           NEXT_PUBLIC_FEEDBACK_ENDPOINT: ${{ vars.NEXT_PUBLIC_FEEDBACK_ENDPOINT }}
           NEXT_PUBLIC_FEEDBACK_API_KEY: ${{ secrets.NEXT_PUBLIC_FEEDBACK_API_KEY }}
 

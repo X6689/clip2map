@@ -107,7 +107,7 @@ export function CreateMapForm() {
         currentStorage: data.currentStorage,
         preferredInput: data.preferredInput,
       });
-      setStatus(result.delivery === "endpoint" ? "success" : "fallback");
+      setStatus(result.delivery === "fallback" ? "fallback" : "success");
       trackEvent("map_request_submitted", { delivery: result.delivery });
     } catch {
       setStatus("error");

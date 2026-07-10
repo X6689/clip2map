@@ -33,7 +33,7 @@ export default function PrivacyPage() {
             },
             {
               title: "Form submissions",
-              body: "A form submission is attempted only when you explicitly press submit. Map requests and feedback are sent to the configured validation endpoint. If delivery fails, the page shows a copy and email fallback instead of claiming success.",
+              body: "A form submission is attempted only when you explicitly press submit. Map requests and feedback are sent to insert-only Supabase tables first, with the validation endpoint retained as a temporary backup. If both fail, the page shows a copy and email fallback instead of claiming success.",
             },
             {
               title: "Data collected",
