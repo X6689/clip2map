@@ -44,13 +44,7 @@
 
 ## Supabase 与公开部署状态
 
-当前机器没有 Supabase access token、Project URL 或 anon key；Supabase CLI 返回 `Access token not provided`。本机也没有 Docker / psql，无法自行启动完整 Supabase 或执行远程 schema。
-
-因此当前状态为：
-
-- 代码、schema、本地与 390px QA 已完成
-- 公开站点仍通过 Day 3 endpoint 收集，不会因本次改动中断
-- 远程 Supabase schema 执行、RLS 的真实 SELECT/PATCH/DELETE 拒绝验证、GitHub Pages Supabase 提交仍待项目配置
+Supabase 项目已配置，远程 schema、RLS 权限、本地表单和 GitHub Pages 表单均已完成验证。完整证据见 `docs/DAY_04_SUPABASE_VERIFY_REPORT.md`。
 
 公开兼容性 QA 已完成：
 
@@ -61,10 +55,8 @@
 - 截图：`outputs/day04/create-public-fallback-mobile-success.png`
 - 截图：`outputs/day04/feedback-public-fallback-mobile-success.png`
 
-## 完成远程切换所需输入
+## 最终状态
 
-1. 在 Supabase SQL Editor 执行 `E:\Clip2Map\supabase\schema.sql`。
-2. 提供公开 Project URL 与 anon key。
-3. 配置 GitHub variable / secret 后重新部署，并完成桌面、390px 和数据库回读测试。
-
-anon key 可以公开；不要提供或配置 service-role key、数据库密码或其他管理凭据。
+- Supabase 已成为本地和公开站的主提交通道
+- Day 3 endpoint 继续保留为备用通道
+- 未使用 service-role key
