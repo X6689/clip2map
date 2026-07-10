@@ -52,6 +52,15 @@
 - 公开站点仍通过 Day 3 endpoint 收集，不会因本次改动中断
 - 远程 Supabase schema 执行、RLS 的真实 SELECT/PATCH/DELETE 拒绝验证、GitHub Pages Supabase 提交仍待项目配置
 
+公开兼容性 QA 已完成：
+
+- GitHub Pages workflow run `29071352192`：通过
+- 390×844 `/create` 通过备用 endpoint 提交成功，`scrollWidth=390`
+- 390×844 `/feedback` 通过备用 endpoint 提交成功，`scrollWidth=390`
+- 两条记录已从 SQLite `endpoint_fallback` 表回读
+- 截图：`outputs/day04/create-public-fallback-mobile-success.png`
+- 截图：`outputs/day04/feedback-public-fallback-mobile-success.png`
+
 ## 完成远程切换所需输入
 
 1. 在 Supabase SQL Editor 执行 `E:\Clip2Map\supabase\schema.sql`。
