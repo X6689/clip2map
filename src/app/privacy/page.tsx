@@ -33,7 +33,7 @@ export default function PrivacyPage() {
             },
             {
               title: "Form submissions",
-              body: "A form submission is attempted only when you explicitly press submit. If no feedback endpoint is configured, nothing is uploaded and you choose whether to send an email or copy the request.",
+              body: "A form submission is attempted only when you explicitly press submit. Map requests and feedback are sent to the configured validation endpoint. If delivery fails, the page shows a copy and email fallback instead of claiming success.",
             },
             {
               title: "Data collected",
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
             },
             {
               title: "Analytics status",
-              body: "Day 2 includes a lightweight event interface for development testing. No third-party analytics platform or hidden user profile is connected.",
+              body: "The MVP includes a lightweight event interface for development testing. No third-party analytics platform or hidden user profile is connected.",
             },
           ].map((item) => (
             <section key={item.title} className="border-b border-[#d8ded9] py-6">

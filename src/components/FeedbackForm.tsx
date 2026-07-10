@@ -47,9 +47,17 @@ export function FeedbackForm() {
 
     try {
       const result = await submitFeedback({
-        type: "product_feedback",
-        data,
-        submittedAt: new Date().toISOString(),
+        email: data.email,
+        city: "",
+        videoLinks: "",
+        mapType: "feedback",
+        notes: nextContent,
+        sourcePage: "/feedback",
+        createdAt: new Date().toISOString(),
+        submissionType: "product_feedback",
+        goal: data.goal,
+        confusing: data.confusing,
+        feature: data.feature,
       });
       setStatus(result.delivery === "endpoint" ? "success" : "fallback");
       trackEvent("feedback_submitted", { delivery: result.delivery });
@@ -62,10 +70,10 @@ export function FeedbackForm() {
     return (
       <div className="rounded-lg border border-[#b9d0c5] bg-[#edf7f1] p-6">
         <CheckCircle2 aria-hidden="true" size={28} className="text-[#176b4b]" />
-        <h2 className="mt-4 text-xl font-bold">Thank you for the feedback.</h2>
-        <p className="mt-2 text-sm leading-6 text-[#52635d]">
-          Your response was sent and will be used to improve this early MVP.
-        </p>
+        <h2 className="mt-4 text-xl font-bold">
+          Request received. We&apos;ll review your links and send a sample map if it
+          fits the test.
+        </h2>
       </div>
     );
   }
@@ -171,8 +179,8 @@ export function FeedbackForm() {
         {status === "submitting" ? "Submitting..." : "Submit feedback"}
       </button>
       <p className="mt-4 text-xs leading-5 text-[#6c7b75]">
-        Feedback is sent only after you submit. Without a configured endpoint, you
-        will be offered an email or copy fallback.
+        Feedback is stored only after you submit. If delivery fails, you will be
+        offered an email or copy fallback.
       </p>
     </form>
   );

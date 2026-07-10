@@ -51,6 +51,7 @@ function formatRequest(data: Record<string, string>) {
     `Number of places: ${data.placeCount}`,
     `Current storage: ${data.currentStorage}`,
     `Preferred input: ${data.preferredInput}`,
+    `Video links: ${data.videoLinks || "None"}`,
     `Email: ${data.email}`,
     `Optional notes: ${data.notes || "None"}`,
     "",
@@ -82,6 +83,7 @@ export function CreateMapForm() {
       placeCount: value(formData, "placeCount"),
       currentStorage: value(formData, "currentStorage"),
       preferredInput: value(formData, "preferredInput"),
+      videoLinks: value(formData, "videoLinks"),
       email: value(formData, "email"),
       notes: value(formData, "notes"),
     };
@@ -92,9 +94,18 @@ export function CreateMapForm() {
 
     try {
       const result = await submitFeedback({
-        type: "map_request",
-        data,
-        submittedAt: new Date().toISOString(),
+        email: data.email,
+        city: data.city,
+        videoLinks: data.videoLinks,
+        mapType: data.mappingType,
+        notes: data.notes,
+        sourcePage: "/create",
+        createdAt: new Date().toISOString(),
+        submissionType: "map_request",
+        mapTitle: data.mapTitle,
+        placeCount: data.placeCount,
+        currentStorage: data.currentStorage,
+        preferredInput: data.preferredInput,
       });
       setStatus(result.delivery === "endpoint" ? "success" : "fallback");
       trackEvent("map_request_submitted", { delivery: result.delivery });
@@ -107,11 +118,10 @@ export function CreateMapForm() {
     return (
       <div className="rounded-lg border border-[#b9d0c5] bg-[#edf7f1] p-6">
         <CheckCircle2 aria-hidden="true" size={28} className="text-[#176b4b]" />
-        <h2 className="mt-4 text-xl font-bold">Thank you. Your request was sent.</h2>
-        <p className="mt-2 text-sm leading-6 text-[#52635d]">
-          We will use it only to learn which food-map workflow is most useful.
-          This does not promise an automatically generated map.
-        </p>
+        <h2 className="mt-4 text-xl font-bold">
+          Request received. We&apos;ll review your links and send a sample map if it
+          fits the test.
+        </h2>
       </div>
     );
   }
@@ -217,6 +227,16 @@ export function CreateMapForm() {
         </label>
       </div>
       <label className="mt-5 grid gap-2 text-sm font-bold">
+        Video links *
+        <textarea
+          name="videoLinks"
+          required
+          rows={5}
+          placeholder={"Paste one TikTok, Reels, or Shorts link per line."}
+          className="resize-y rounded-md border border-[#cfd7d1] p-3 font-normal placeholder:text-[#9aa69f] focus:border-[#123f4d]"
+        />
+      </label>
+      <label className="mt-5 grid gap-2 text-sm font-bold">
         Email *
         <input
           name="email"
@@ -247,8 +267,8 @@ export function CreateMapForm() {
         {status === "submitting" ? "Submitting..." : "Submit map request"}
       </button>
       <p className="mt-4 text-xs leading-5 text-[#6c7b75]">
-        Submissions are only sent when you press submit. Without a configured
-        endpoint, Clip2Map prepares a request for you to email or copy.
+        Submissions are only sent when you press submit. Clip2Map stores the
+        request for this validation test; if delivery fails, you can copy it.
       </p>
     </form>
   );

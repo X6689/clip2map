@@ -1,9 +1,15 @@
 const FEEDBACK_TIMEOUT_MS = 10_000;
 
 export type FeedbackPayload = {
-  type: "map_request" | "product_feedback";
-  data: Record<string, string | boolean>;
-  submittedAt: string;
+  email: string;
+  city: string;
+  videoLinks: string;
+  mapType: string;
+  notes: string;
+  sourcePage: "/create" | "/feedback";
+  createdAt: string;
+  submissionType: "map_request" | "product_feedback";
+  [key: string]: string;
 };
 
 export type FeedbackResult =
@@ -14,6 +20,7 @@ export async function submitFeedback(
   payload: FeedbackPayload,
 ): Promise<FeedbackResult> {
   const endpoint = process.env.NEXT_PUBLIC_FEEDBACK_ENDPOINT?.trim();
+  const apiKey = process.env.NEXT_PUBLIC_FEEDBACK_API_KEY?.trim();
 
   if (!endpoint) {
     return { delivery: "fallback" };
@@ -25,7 +32,13 @@ export async function submitFeedback(
   try {
     const response = await fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
+        ...(apiKey
+          ? { apikey: apiKey, Authorization: `Bearer ${apiKey}` }
+          : {}),
+      },
       body: JSON.stringify(payload),
       signal: controller.signal,
     });

@@ -10,7 +10,7 @@
 
 ## 推荐平台
 
-当前使用 GitHub Pages 免费部署。Vercel Hobby 仍可作为可选的等效 Next.js 平台。项目不需要自定义服务器、数据库或付费资源。
+当前使用 GitHub Pages 免费部署。表单持久化推荐 Supabase Free，前端只使用公开 anon key 和 insert-only RLS policy。
 
 ## 推送到 GitHub
 
@@ -61,13 +61,14 @@ npx vercel --prod
 
 ## 环境变量
 
-可选变量：
+必需变量：
 
 ```text
 NEXT_PUBLIC_FEEDBACK_ENDPOINT=
+NEXT_PUBLIC_FEEDBACK_API_KEY=
 ```
 
-留空时使用 mailto 和 Copy Request fallback。配置后，端点必须接受 `POST` JSON、允许部署域名的 CORS，并且不能依赖前端秘密密钥。变量名含 `NEXT_PUBLIC_`，值会进入浏览器代码。
+在 Supabase SQL Editor 执行 `supabase/schema.sql`，endpoint 使用 `https://PROJECT.supabase.co/rest/v1/clip2map_submissions`，API key 使用 anon key。两项都会进入浏览器，绝不能配置 service-role key。RLS 只授予匿名 insert，不授予 select。留空或请求失败时显示 Copy fallback。
 
 ## 自定义域名
 
@@ -81,7 +82,7 @@ NEXT_PUBLIC_FEEDBACK_ENDPOINT=
 
 1. 本地运行 `npm ci`、`npm run lint`、`npm run build`。
 2. 确认 Node.js 使用平台支持的稳定版本，建议 Node 20 或 22。
-3. 检查环境变量名和值，确认没有把秘密密钥放进 `NEXT_PUBLIC_`。
+3. 检查环境变量名和值，确认使用 anon key 而不是 service-role key。
 4. 检查 OpenStreetMap 图块网络请求和浏览器控制台 CORS 错误。
 5. Leaflet 使用自定义 `divIcon`，不依赖本地默认 marker 图片路径。
 6. 表单端点失败时应显示 fallback，而不是空白或假成功。
@@ -97,4 +98,4 @@ NEXT_PUBLIC_FEEDBACK_ENDPOINT=
 - `.env.local`、`.next`、`node_modules` 和 `outputs` 未提交
 - `/`、`/create`、`/feedback`、`/privacy`、`/maps/tokyo-ramen` 返回 200
 - 8 个 marker、OpenStreetMap attribution、筛选和复制链接正常
-- 未配置 endpoint 时明确显示“未上传”并提供 fallback
+- 成功提交后在数据库回读记录；失败时明确显示 fallback

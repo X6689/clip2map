@@ -40,6 +40,7 @@ jobs:
         run: npm run build
         env:
           NEXT_PUBLIC_FEEDBACK_ENDPOINT: ${{ vars.NEXT_PUBLIC_FEEDBACK_ENDPOINT }}
+          NEXT_PUBLIC_FEEDBACK_API_KEY: ${{ secrets.NEXT_PUBLIC_FEEDBACK_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
